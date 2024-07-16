@@ -1,0 +1,13 @@
+This lecture is about using spring boot actuator:
+
+To use the actuator endpoints
+    1-Adding maven xml of to pom.xml file:
+    <dependency>
+    			<groupId>org.springframework.boot</groupId>
+    			<artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
+    2- By default actuator/health exposed
+    3- To enable other actuators check the lecture 19 and application.properties file
+
+    4- Info endpoints return empty JSON object by default, so you need to customize the return data in application.properties
