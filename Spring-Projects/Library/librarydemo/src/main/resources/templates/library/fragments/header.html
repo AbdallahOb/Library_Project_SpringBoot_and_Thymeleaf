@@ -1,0 +1,34 @@
+<header xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand text-light" th:href="@{/home/list}">
+                <img th:src="@{/css/images/books.png}" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+                Library
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/home/list}">Home</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link text-white" th:href="@{/books/list}">Books</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link text-white" th:href="@{/authors/list}">Authors</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link text-white" th:href="@{/shelves/list}">Shelves</a>
+                    </li>
+                </ul>
+                <form th:action="@{/logout}" method="post" class="d-flex">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                    <button type="submit" class="btn btn-outline-light">Logout</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body >
+<div th:insert="~{library/fragments/header}"></div>
+
+<div class="container p-3 my-5">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-black">List Of Books</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a th:href="@{/books/addBookForm}" class="btn btn-dark">
+                <i class="bi bi-plus-circle"></i> &nbsp; Create New Book
+            </a>
+        </div>
+    </div>
+
+    <br /> <br />
+    <table class="table table-bordered table-striped table-dark" style="width:100%">
+        <thead>
+        <tr style="text-align:center">
+            <th >
+                Title
+            </th>
+            <th >
+                Quantity
+            </th>
+            <th >
+                Creation Date
+            </th>
+            <th >
+                Cover Image
+            </th>
+            <th >
+                Attached File
+            </th>
+            <th >
+                Author
+            </th>
+            <th >
+                Shelf
+            </th>
+            <th >
+                Action
+            </th>
+        </tr>
+        </thead>
+        <tbody class="table-light">
+        <tr th:each="tempBook : ${books}" style="text-align:center; background-color: white;">
+            <td th:text="${tempBook.title}"  class="text-black"/>
+            <td th:text="${tempBook.quantity}" class="text-black"/>
+            <td th:text="${tempBook.creationDate}" class="text-black"/>
+
+            <td>
+                <a th:href="@{/books/downloadImage(bookId=${tempBook.id})}" class="btn btn-primary mx-2" style="width:90%" >
+                    <i class="bi bi-file-earmark-arrow-down"></i> &nbsp; <span th:text="${tempBook.imageName}"></span></a>
+            </td>
+
+            <td>
+                <a th:href="@{/books/downloadFile(bookId=${tempBook.id})}" class="btn btn-primary mx-2" style="width:90%" >
+                    <i class="bi bi-file-earmark-arrow-down"></i> &nbsp; <span th:text="${tempBook.fileName}"></span></a>
+            </td>
+
+            <td th:text="${tempBook.author.firstName}" class="text-black"/>
+            <td th:text="${tempBook.shelf.name}" class="text-black"/>
+            <td>
+                <div class="w-75 btn-group" role="group">
+                    <a th:href="@{/books/showFormForUpdate(bookId=${tempBook.id})}" class="btn btn-warning mx-2" >
+                        <i class="bi bi-pencil-square"></i> &nbsp; Edit
+                    </a>
+                    <a th:href="@{/books/delete(bookId=${tempBook.id})}" class="btn btn-danger mx-2" >
+                        <i class="bi bi-trash-fill"></i> &nbsp; Delete
+                    </a>
+                </Div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<!--<div class="container mt-3">-->
+<!--    <h3>Books Directory</h3>-->
+<!--    <hr>-->
+
+<!--    &lt;!&ndash; Add a button &ndash;&gt;-->
+<!--    <a th:href="@{/books/addBookForm}"-->
+<!--       class="btn btn-primary btn-sm mb-3" >-->
+<!--        Add Book-->
+<!--    </a>-->
+
+<!--    <table class="table table-bordered table-striped">-->
+<!--        <thead class="table-dark">-->
+<!--        <tr>-->
+<!--            <th>Id</th>-->
+<!--            <th>Title</th>-->
+<!--            <th>Quantity</th>-->
+<!--            <th>Creation Date</th>-->
+<!--            <th>Cover Image</th>-->
+<!--            <th>PDF File</th>-->
+<!--            <th>Author</th>-->
+<!--            <th>Shelf</th>-->
+<!--            <th>Actions</th>-->
+
+
+<!--        </tr>-->
+<!--        </thead>-->
+
+<!--        <tbody>-->
+<!--        <tr th:each="tempBook : ${books}">-->
+<!--            <td th:text="${tempBook.id}" />-->
+<!--            <td th:text="${tempBook.title}" />-->
+<!--            <td th:text="${tempBook.quantity}" />-->
+<!--            <td th:text="${tempBook.creationDate}" />-->
+<!--            <td>-->
+<!--                <a th:href="@{/books/downloadImage(bookId=${tempBook.id})}"-->
+<!--                   class="btn btn-primary btn-sm mb-3"-->
+<!--                   th:text="${tempBook.imageName}"-->
+<!--                >-->
+
+<!--                </a>-->
+<!--            </td>-->
+<!--            <td>-->
+<!--                <a th:href="@{/books/downloadFile(bookId=${tempBook.id})}"-->
+<!--                   class="btn btn-primary btn-sm mb-3"-->
+<!--                    th:text="${tempBook.fileName}"-->
+<!--                >-->
+
+<!--                </a>-->
+<!--            </td>-->
+<!--            <td th:text="${tempBook.author.firstName}" />-->
+<!--            <td th:text="${tempBook.shelf.name}" />-->
+
+<!--            &lt;!&ndash; Add update button Link &ndash;&gt;-->
+<!--            <td>-->
+<!--                <a th:href="@{/books/showFormForUpdate(bookId=${tempBook.id})}"-->
+<!--                   class="btn btn-info btn-sm">-->
+<!--                    Update-->
+<!--                </a>-->
+
+<!--                &lt;!&ndash; Add delete button/link &ndash;&gt;-->
+<!--                <a th:href="@{/books/delete(bookId=${tempBook.id})}"-->
+<!--                   class="btn btn-danger btn-sm"-->
+<!--                   onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false">-->
+<!--                    Delete-->
+<!--                </a>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+
+<!--    </table>-->
+<!--</div>-->
+</body>
+</html>
